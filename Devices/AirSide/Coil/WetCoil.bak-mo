@@ -1,0 +1,177 @@
+within BuildingControlEmulator.Devices.Coil;
+model WetCoil
+  replaceable package MediumAir = Modelica.Media.Interfaces.PartialMedium "Medium for the air";
+  replaceable package MediumWat = Modelica.Media.Interfaces.PartialMedium "Medium for the water";
+  parameter Modelica.SIunits.MassFlowRate mAirFloRat "mass flow rate for air";
+  parameter Modelica.SIunits.MassFlowRate mWatFloRat "mass flow rate for water";
+  parameter Modelica.SIunits.Pressure PreDroAir "Pressure drop in the air side";
+  parameter Modelica.SIunits.Pressure PreDroWat "Pressure drop in the water side";
+  parameter Real UA "Rated heat exchange coefficients";
+
+
+  Buildings.Fluid.HeatExchangers.WetCoilCounterFlow cooCoi(redeclare package
+      Medium1 = MediumWat, redeclare package Medium2 = MediumAir,
+    m1_flow_nominal=mWatFloRat,
+    m2_flow_nominal=mAirFloRat,
+    dp1_nominal=PreDroWat,
+    dp2_nominal=PreDroAir,
+    UA_nominal=UA)
+    annotation (Placement(transformation(extent={{-14,-10},{6,10}})));
+  Modelica.Fluid.Sensors.TemperatureTwoPort temEntWat(redeclare package Medium =
+        MediumWat)
+    annotation (Placement(transformation(extent={{-72,10},{-52,30}})));
+  Modelica.Fluid.Sensors.TemperatureTwoPort temLeaWat(redeclare package Medium =
+        MediumWat)
+    annotation (Placement(transformation(extent={{60,10},{80,30}})));
+  Modelica.Fluid.Interfaces.FluidPort_a port_a_Wat(redeclare package Medium =
+        MediumWat)
+    "Fluid connector a (positive design flow direction is from port_a to port_b)"
+    annotation (Placement(transformation(extent={{-110,50},{-90,70}})));
+  Modelica.Fluid.Interfaces.FluidPort_b port_b_Wat(redeclare package Medium =
+        MediumWat)
+    "Fluid connector b (positive design flow direction is from port_a to port_b)"
+    annotation (Placement(transformation(extent={{90,50},{110,70}})));
+  Modelica.Fluid.Sensors.TemperatureTwoPort temEntAir(redeclare package Medium =
+        MediumAir)
+    annotation (Placement(transformation(extent={{50,-70},{30,-50}})));
+  Modelica.Fluid.Sensors.MassFlowRate masFloWat(redeclare package Medium =
+        MediumWat)
+    annotation (Placement(transformation(extent={{26,-6},{46,14}})));
+  Modelica.Fluid.Sensors.Pressure preWatEnt(redeclare package Medium =
+        MediumWat)
+    annotation (Placement(transformation(extent={{-18,30},{-38,50}})));
+  Modelica.Fluid.Sensors.Pressure preWatLea(redeclare package Medium =
+        MediumWat)
+    annotation (Placement(transformation(extent={{22,30},{2,50}})));
+  Modelica.Fluid.Interfaces.FluidPort_a port_a_Air(redeclare package Medium =
+        MediumAir)
+    "Fluid connector a (positive design flow direction is from port_a to port_b)"
+    annotation (Placement(transformation(extent={{90,-70},{110,-50}})));
+  Modelica.Fluid.Sensors.MassFlowRate masFloWat1(redeclare package Medium =
+        MediumAir)
+    annotation (Placement(transformation(extent={{-40,-70},{-60,-50}})));
+  Modelica.Fluid.Sensors.TemperatureTwoPort temLeaAir(redeclare package Medium =
+        MediumAir)
+    annotation (Placement(transformation(extent={{-68,-70},{-88,-50}})));
+  Modelica.Fluid.Interfaces.FluidPort_b port_b_Air(redeclare package Medium =
+        MediumAir)
+    "Fluid connector b (positive design flow direction is from port_a to port_b)"
+    annotation (Placement(transformation(extent={{-110,-70},{-90,-50}})));
+  Modelica.Fluid.Sensors.Pressure preAirLea(redeclare package Medium =
+        MediumAir)
+    annotation (Placement(transformation(extent={{-30,-38},{-50,-18}})));
+  Modelica.Fluid.Sensors.Pressure preAirEnt(redeclare package Medium =
+        MediumAir)
+    annotation (Placement(transformation(extent={{50,-34},{30,-14}})));
+  Modelica.Blocks.Interfaces.RealOutput T1
+    "Temperature of the passing fluid"
+    annotation (Placement(transformation(extent={{100,-30},{120,-10}})));
+equation
+  connect(cooCoi.port_a1, temEntWat.port_b) annotation (Line(
+      points={{-14,6},{-40,6},{-40,20},{-52,20}},
+      color={0,127,255},
+      thickness=1));
+  connect(temEntWat.port_a, port_a_Wat) annotation (Line(
+      points={{-72,20},{-80,20},{-80,60},{-100,60}},
+      color={0,127,255},
+      thickness=1));
+  connect(temLeaWat.port_b, port_b_Wat) annotation (Line(
+      points={{80,20},{86,20},{86,60},{100,60}},
+      color={0,127,255},
+      thickness=1));
+  connect(cooCoi.port_b1, masFloWat.port_a) annotation (Line(
+      points={{6,6},{12,6},{12,4},{26,4}},
+      color={0,127,255},
+      thickness=1));
+  connect(masFloWat.port_b, temLeaWat.port_a) annotation (Line(
+      points={{46,4},{50,4},{50,20},{60,20}},
+      color={0,127,255},
+      thickness=1));
+  connect(preWatEnt.port, temEntWat.port_b) annotation (Line(
+      points={{-28,30},{-28,6},{-40,6},{-40,20},{-52,20}},
+      color={0,127,255},
+      thickness=1));
+  connect(preWatLea.port, masFloWat.port_a) annotation (Line(
+      points={{12,30},{12,4},{26,4}},
+      color={0,127,255},
+      thickness=1));
+  connect(temEntAir.port_b, cooCoi.port_a2) annotation (Line(
+      points={{30,-60},{20,-60},{20,-6},{6,-6}},
+      color={0,127,255},
+      thickness=1));
+  connect(temEntAir.port_a, port_a_Air) annotation (Line(
+      points={{50,-60},{100,-60}},
+      color={0,127,255},
+      thickness=1));
+  connect(masFloWat1.port_a, cooCoi.port_b2) annotation (Line(
+      points={{-40,-60},{-20,-60},{-20,-6},{-14,-6}},
+      color={0,127,255},
+      thickness=1));
+  connect(temLeaAir.port_a, masFloWat1.port_b) annotation (Line(
+      points={{-68,-60},{-60,-60}},
+      color={0,127,255},
+      thickness=1));
+  connect(temLeaAir.port_b, port_b_Air) annotation (Line(
+      points={{-88,-60},{-100,-60}},
+      color={0,127,255},
+      thickness=1));
+  connect(preAirLea.port, cooCoi.port_b2) annotation (Line(
+      points={{-40,-38},{-20,-38},{-20,-6},{-14,-6}},
+      color={0,127,255},
+      thickness=1));
+  connect(preAirEnt.port, cooCoi.port_a2) annotation (Line(
+      points={{40,-34},{40,-40},{20,-40},{20,-6},{6,-6}},
+      color={0,127,255},
+      thickness=1));
+  connect(temLeaAir.T, T1) annotation (Line(
+      points={{-78,-49},{-78,-20},{110,-20}},
+      color={0,0,127},
+      pattern=LinePattern.Dash));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+        Line(
+          points={{-90,60},{-40,60}},
+          color={0,0,127},
+          thickness=1),
+        Line(
+          points={{-76,60}},
+          color={0,0,127},
+          pattern=LinePattern.Dash),
+        Line(
+          points={{40,60},{90,60}},
+          color={0,0,127},
+          thickness=1),
+        Line(
+          points={{-40,60},{-40,-80}},
+          color={0,0,127},
+          thickness=1),
+        Line(
+          points={{40,60},{40,-80}},
+          color={0,0,127},
+          thickness=1),
+        Line(
+          points={{-40,-80},{40,-80}},
+          color={0,0,127},
+          thickness=1),
+        Line(
+          points={{-40,40},{40,40}},
+          color={0,0,127},
+          thickness=1),
+        Line(
+          points={{-40,40},{38,-78}},
+          color={0,0,127},
+          thickness=1),
+        Text(
+          extent={{-10,30},{44,-12}},
+          lineColor={0,0,127},
+          lineThickness=1,
+          textString="-"),
+        Line(
+          points={{-90,-60},{-40,-60}},
+          color={0,0,127},
+          thickness=1),
+        Line(
+          points={{40,-60},{90,-60}},
+          color={0,0,127},
+          thickness=1)}),                                        Diagram(
+        coordinateSystem(preserveAspectRatio=false)));
+end WetCoil;

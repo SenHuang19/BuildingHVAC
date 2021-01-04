@@ -1,0 +1,15 @@
+within BuildingControlEmulator.Devices.Coil.Control;
+model PICon
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+          Rectangle(
+          extent={{-100,100},{100,-100}},
+          lineColor={0,127,255},
+          lineThickness=0.5,
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid), Text(
+          extent={{-52,22},{52,-30}},
+          lineColor={0,127,255},
+          lineThickness=1,
+          textString="PI")}), Diagram(coordinateSystem(preserveAspectRatio=
+            false)));
+end PICon;

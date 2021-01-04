@@ -1,0 +1,5 @@
+within BuildingControlEmulator.Devices.WaterSide.BaseClasses.Examples;
+model Chiller
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)));
+end Chiller;

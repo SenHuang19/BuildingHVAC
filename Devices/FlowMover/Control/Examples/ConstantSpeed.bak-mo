@@ -1,0 +1,9 @@
+within BuildingControlEmulator.Devices.FlowMover.Control.Examples;
+model ConstantSpeed
+  import BuildingControlEmulator;
+  extends Modelica.Icons.Example;
+  BuildingControlEmulator.Devices.FlowMover.Control.ConstantSpeed constantSpeed
+    annotation (Placement(transformation(extent={{-40,20},{-20,40}})));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)));
+end ConstantSpeed;
