@@ -49,11 +49,11 @@ model ZonCon
     annotation (Placement(transformation(extent={{-46,50},{-26,70}})));
   IBPSA.Utilities.IO.SignalExchange.Read THeaSet
     annotation (Placement(transformation(extent={{-80,-64},{-72,-56}})));
+  IBPSA.Utilities.IO.SignalExchange.Overwrite oveAirFlowSetPoi
+    annotation (Placement(transformation(extent={{68,54},{82,68}})));
+  IBPSA.Utilities.IO.SignalExchange.Overwrite oveyValPos
+    annotation (Placement(transformation(extent={{72,-66},{86,-52}})));
 equation
-  connect(heaCon.y, yValPos) annotation (Line(
-      points={{63,-60},{110,-60}},
-      color={0,0,127},
-      pattern=LinePattern.Dash));
   connect(cooCon.y, swi.u1) annotation (Line(points={{11,60},{34,60},{34,28},{46,
           28}}, color={0,0,127},
       pattern=LinePattern.Dash));
@@ -69,8 +69,6 @@ equation
       points={{-5,20},{46,20}},
       color={255,0,255},
       pattern=LinePattern.Dash));
-  connect(swi.y, yAirFlowSetPoi) annotation (Line(points={{69,20},{80,20},{80,
-          60},{110,60}}, color={0,0,127}));
   connect(oveTCooSet.u, TCooSetPoi) annotation (Line(
       points={{-82,60},{-120,60}},
       color={0,0,127},
@@ -111,6 +109,14 @@ equation
       points={{-71.6,-60},{-62,-60},{-62,14},{-58,14}},
       color={0,0,127},
       pattern=LinePattern.Dash));
+  connect(swi.y, oveAirFlowSetPoi.u) annotation (Line(points={{69,20},{80,20},{
+          80,48},{52,48},{52,61},{66.6,61}}, color={0,0,127}));
+  connect(oveAirFlowSetPoi.y, yAirFlowSetPoi) annotation (Line(points={{82.7,61},
+          {90,61},{90,60},{110,60}}, color={0,0,127}));
+  connect(heaCon.y, oveyValPos.u) annotation (Line(points={{63,-60},{70,-60},{
+          70,-59},{70.6,-59}}, color={0,0,127}));
+  connect(oveyValPos.y, yValPos) annotation (Line(points={{86.7,-59},{94,-59},{
+          94,-60},{110,-60}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
           Rectangle(
           extent={{-100,100},{100,-100}},
