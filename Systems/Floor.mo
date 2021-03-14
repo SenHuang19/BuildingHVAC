@@ -339,9 +339,9 @@ equation
       pattern=LinePattern.Dash));
   connect(duaFanAirHanUnit.TOut, TOut) annotation (Line(
       points={{-69.4,-9.4},{-78,-9.4},{-78,-74},{6,-74},{6,-96},{0,-96},{0,-110}},
-
       color={0,0,127},
       pattern=LinePattern.Dash));
+
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           extent={{-100,100},{100,-100}},

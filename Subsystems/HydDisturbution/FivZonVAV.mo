@@ -170,6 +170,8 @@ model FivZonVAV
   Modelica.Blocks.Interfaces.RealOutput TZon[5]
     "Temperature of the passing fluid"
     annotation (Placement(transformation(extent={{100,30},{120,50}})));
+  Modelica.Blocks.Sources.RealExpression realExpression[5](y=vol.heatPort.T)
+    annotation (Placement(transformation(extent={{44,30},{64,50}})));
 equation
 
   connect(fixedHeatFlow.port, vol.heatPort) annotation (Line(points={{-20,-80},{
@@ -215,8 +217,8 @@ equation
       points={{-42.5,-35},{-8,-35},{-8,-20},{58,-20},{58,-40},{110,-40}},
       color={0,0,127},
       pattern=LinePattern.Dash));
-  connect(temZon.T, TZon) annotation (Line(
-      points={{-2,-35},{-2,-35},{-2,-12},{-2,-6},{78,-6},{78,40},{110,40}},
+  connect(realExpression.y, TZon) annotation (Line(
+      points={{65,40},{110,40}},
       color={0,0,127},
       pattern=LinePattern.Dash));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={

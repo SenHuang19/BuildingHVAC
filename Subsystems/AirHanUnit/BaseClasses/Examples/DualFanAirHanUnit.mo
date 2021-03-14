@@ -233,9 +233,9 @@ equation
       pattern=LinePattern.Dash));
   connect(duaFanAirHanUnit.TOut, x_pTphi.T) annotation (Line(
       points={{-15.4,28.4},{-48,28.4},{-48,18},{-112,18},{-112,112},{-108,112}},
-
       color={0,0,127},
       pattern=LinePattern.Dash));
+
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
     experiment(StopTime=86400));
 end DualFanAirHanUnit;
