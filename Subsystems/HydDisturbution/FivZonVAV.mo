@@ -123,9 +123,9 @@ model FivZonVAV
     PreDroBra3=PreAirDroBra3,
     PreDroBra4=PreAirDroBra4,
     PreDroBra5=PreAirDroBra5) annotation (Placement(transformation(extent={{-74,-52},{-44,-18}})));
-  Devices.AirSide.Terminal.BaseClasses.VAV
-                                   vAV[5](redeclare package MediumAir =
-        MediumAir, redeclare package MediumWat = MediumWat,
+  Devices.AirSide.Terminal.BaseClasses.VAV_advance_temp_sensor vAV[5](
+    redeclare package MediumAir = MediumAir,
+    redeclare package MediumWat = MediumWat,
     mAirFloRat={mAirFloRat1,mAirFloRat2,mAirFloRat3,mAirFloRat4,mAirFloRat5},
     mWatFloRat={mWatFloRat1,mWatFloRat2,mWatFloRat3,mWatFloRat4,mWatFloRat5},
     PreDroAir={PreDroAir1,PreDroAir2,PreDroAir3,PreDroAir4,PreDroAir5},
@@ -179,12 +179,12 @@ equation
   connect(fixedHeatFlow.Q_flow, Q_flow)
     annotation (Line(points={{-40,-80},{-110,-80}}, color={0,0,127},
       pattern=LinePattern.Dash));
-  connect(vAV.port_a_Wat,ReheatWatNet. ports_b) annotation (Line(points={{22,18},
+  connect(vAV.port_a_Wat, ReheatWatNet.ports_b) annotation (Line(points={{22,18},
           {22,39.18},{-46,39.18}}, color={255,0,0}));
-  connect(vAV.port_b_Wat,ReheatWatNet. ports_a) annotation (Line(points={{28,18},
+  connect(vAV.port_b_Wat, ReheatWatNet.ports_a) annotation (Line(points={{28,18},
           {28,57.54},{-46,57.54}}, color={255,0,0}));
-  connect(vAV.port_a, AirNetWor.ports_b)
-    annotation (Line(points={{20,8},{-20,8},{-20,-27.18},{-44,-27.18}},   color={0,127,255}));
+  connect(vAV.port_a, AirNetWor.ports_b) annotation (Line(points={{20,8},{-20,8},
+          {-20,-27.18},{-44,-27.18}}, color={0,127,255}));
     for i in 1:5 loop
 
     connect(vAV[i].port_b, vol[i].ports[1]);

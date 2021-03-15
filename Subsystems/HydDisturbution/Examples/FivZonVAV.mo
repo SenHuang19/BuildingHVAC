@@ -110,9 +110,10 @@ model FivZonVAV
 
   Modelica.Blocks.Sources.Ramp ramp[5](duration=86400, height=1*1000*10)
                                                                  annotation (Placement(transformation(extent={{-100,-90},{-80,-70}})));
-  BuildingControlEmulator.Subsystems.HydDisturbution.FivZonVAV fivZonVAV(redeclare
-      package                                                                              MediumAir = MediumAir, redeclare
-      package                                                                                                                       MediumWat = MediumWat,
+  BuildingControlEmulator.Subsystems.HydDisturbution.FivZonVAV fivZonVAV(
+    vAV(pI(k=1, Ti=60)),
+    redeclare package MediumAir = MediumAir,
+    redeclare package MediumWat = MediumWat,
     PreAirDroMai1=PreAirDroMai1,
     PreAirDroMai2=PreAirDroMai2,
     PreAirDroMai3=PreAirDroMai3,
@@ -155,8 +156,8 @@ model FivZonVAV
     eps4=eps4,
     PreDroAir5=PreDroAir5,
     PreDroWat5=PreDroWat5,
-    eps5=eps5,
-    vAV(pI(k=1, Ti=60)))                                                 annotation (Placement(transformation(extent={{-28,-28},{18,22}})));
+    eps5=eps5)
+    annotation (Placement(transformation(extent={{-28,-28},{18,22}})));
   IBPSA.Fluid.Sources.Boundary_pT souWat(
     p(displayUnit="Pa") = 100000 + PreWatDroMai1 + PreWatDroMai2 + PreWatDroMai3 + PreWatDroMai4 + PreWatDroBra5 + PreDroWat5,
     nPorts=1,

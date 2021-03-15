@@ -140,8 +140,10 @@ model Floor
         273.15 + 12.88),
     Fan_k=0.01)
     annotation (Placement(transformation(extent={{-68,-12},{-40,14}})));
-  Subsystems.HydDisturbution.FivZonVAV fivZonVAV(redeclare package MediumAir = MediumAir, redeclare
-      package MediumWat = MediumHeaWat,
+  Subsystems.HydDisturbution.FivZonVAV fivZonVAV(
+    vAV(pI(k=0.1, Ti=60)),
+    redeclare package MediumAir = MediumAir,
+    redeclare package MediumWat = MediumHeaWat,
     PreAirDroMai1=PreAirDroMai1,
     PreAirDroMai2=PreAirDroMai2,
     PreAirDroMai3=PreAirDroMai3,
@@ -184,9 +186,7 @@ model Floor
     eps4=eps4,
     PreDroAir5=PreDroAir5,
     PreDroWat5=PreDroWat5,
-    eps5=eps5,
-    vAV(pI(k=0.1, Ti=60)))
-    annotation (Placement(transformation(extent={{18,-50},{72,-2}})));
+    eps5=eps5) annotation (Placement(transformation(extent={{18,-50},{72,-2}})));
   Modelica.Fluid.Interfaces.FluidPort_b port_b_CooWat(redeclare package Medium =
         MediumCooWat)
     "Fluid connector b (positive design flow direction is from port_a to port_b)"

@@ -2,7 +2,7 @@ within BuildingControlEmulator.Devices.FlowMover;
 model VariableSpeedMover
   "the component contains both the variable speed fan/pump and the controller"
   import BuildingControlEmulator;
-  extends BaseClasses.FlowMover;
+  extends BaseClasses.FlowMover(withoutMotor(VarSpeFloMov(riseTime=240)));
   parameter Real k(min=0, unit="1") = 1 "Gain of controller";
   parameter Modelica.SIunits.Time Ti(min=Modelica.Constants.small)=0.5
     "Time constant of Integrator block";
