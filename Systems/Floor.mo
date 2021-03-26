@@ -108,7 +108,8 @@ model Floor
   parameter Modelica.SIunits.Efficiency eps5(max=1) = 0.8
     "Heat exchanger effectiveness of vav 5";
 
-  Subsystems.AirHanUnit.BaseClasses.DuaFanAirHanUnit duaFanAirHanUnit(numTemp=5,
+  Subsystems.AirHanUnit.BaseClasses.DuaFanAirHanUnit duaFanAirHanUnit(
+    numTemp=5,
     redeclare package MediumAir = MediumAir,
     redeclare package MediumWat = MediumCooWat,
     PreDroCoiAir=PreDroCoiAir,
@@ -123,24 +124,29 @@ model Floor
     VolFloCur=VolFloCur,
     SupPreCur=SupPreCur,
     RetPreCur=RetPreCur,
-    mAirFloRat=mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 + mAirFloRat5,
+    mAirFloRat=mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 +
+        mAirFloRat5,
     PreDroWat=PreDroCooWat,
     Coi_k=1,
     Coi_Ti=60,
     TemEcoHig=TemEcoHig,
     TemEcoLow=TemEcoLow,
     MixingBoxDamMin=MixingBoxDamMin,
-    mWatFloRat=(mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 + mAirFloRat5)*(30 - 12.88)/4.2/6,
-    mFreAirFloRat=(mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 + mAirFloRat5)*0.3,
+    mWatFloRat=(mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 +
+        mAirFloRat5)*(30 - 12.88)/4.2/6,
+    mFreAirFloRat=(mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 +
+        mAirFloRat5)*0.3,
     UA=-(mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 + mAirFloRat5)*(
-        1000*17)/Buildings.Fluid.HeatExchangers.BaseClasses.lmtd(
+        1000*17)/
+        Buildings.HeatTransfer.UsersGuide.HeatExchangers.BaseClasses.lmtd(
         273.15 + 6,
         273.15 + 12,
         273.15 + 30,
         273.15 + 12.88),
     Fan_k=0.01)
     annotation (Placement(transformation(extent={{-68,-12},{-40,14}})));
-  Subsystems.HydDisturbution.FivZonVAV fivZonVAV(
+  replaceable Subsystems.HydDisturbution.FivZonVAV_fault
+                                       fivZonVAV(
     vAV(pI(k=0.1, Ti=60)),
     redeclare package MediumAir = MediumAir,
     redeclare package MediumWat = MediumHeaWat,
@@ -235,7 +241,10 @@ model Floor
   Modelica.Blocks.Interfaces.RealInput Q_flow[5]
     annotation (Placement(transformation(extent={{122,-92},{100,-70}})));
   Modelica.Blocks.Interfaces.RealOutput TZon[5]
-    "Temperature of the passing fluid"
+    "Temperature of the zone for cosimulation"
+    annotation (Placement(transformation(extent={{100,-10},{120,10}})));
+  Modelica.Blocks.Interfaces.RealOutput TZonSen[5]
+    "Temperature of the zone for control"
     annotation (Placement(transformation(extent={{100,-10},{120,10}})));
   Modelica.Blocks.Interfaces.RealInput ZonHeaTempSetPoi[5]
     "Connector of setpoint input signal"
@@ -249,11 +258,13 @@ model Floor
         rotation=-90,
         origin={0,-114})));
 equation
-  connect(fivZonVAV.port_a_Air, duaFanAirHanUnit.port_b_Air) annotation (Line(
+  connect(fivZonVAV.port_a_Air, duaFanAirHanUnit.port_b_Air) annotation (
+      Line(
       points={{18,-16.4},{-10,-16.4},{-10,-22},{-20,-22},{-20,1},{-40,1}},
       color={0,127,255},
       thickness=0.5));
-  connect(fivZonVAV.port_b_Air, duaFanAirHanUnit.port_a_Air) annotation (Line(
+  connect(fivZonVAV.port_b_Air, duaFanAirHanUnit.port_a_Air) annotation (
+      Line(
       points={{18,-40.4},{-20,-40.4},{-20,-68},{-40,-68},{-40,-9.4}},
       color={0,127,255},
       thickness=0.5));
@@ -289,7 +300,7 @@ equation
       points={{74.7,-35.6},{92,-35.6},{92,8.8},{-38.6,8.8}},
       color={0,0,127},
       pattern=LinePattern.Dash));
-  connect(fivZonVAV.TZon, duaFanAirHanUnit.ZonTemp) annotation (Line(
+  connect(fivZonVAV.TZonSen, duaFanAirHanUnit.ZonTemp) annotation (Line(
       points={{74.7,-16.4},{78,-16.4},{78,-16},{82,-16},{82,-62},{-30,-62},{-30,
           -6.8},{-38.6,-6.8}},
       color={0,0,127},
@@ -324,6 +335,10 @@ equation
       color={0,0,127},
       pattern=LinePattern.Dash));
   connect(fivZonVAV.TZon, TZon) annotation (Line(
+      points={{74.7,-16.4},{96,-16.4},{96,0},{110,0}},
+      color={0,0,127},
+      pattern=LinePattern.Dash));
+  connect(fivZonVAV.TZonSen, TZonSen) annotation (Line(
       points={{74.7,-16.4},{96,-16.4},{96,0},{110,0}},
       color={0,0,127},
       pattern=LinePattern.Dash));
