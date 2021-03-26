@@ -137,8 +137,7 @@ model Floor
     mFreAirFloRat=(mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 +
         mAirFloRat5)*0.3,
     UA=-(mAirFloRat1 + mAirFloRat2 + mAirFloRat3 + mAirFloRat4 + mAirFloRat5)*(
-        1000*17)/
-        Buildings.HeatTransfer.UsersGuide.HeatExchangers.BaseClasses.lmtd(
+        1000*17)/Buildings.Fluid.HeatExchangers.BaseClasses.lmtd(
         273.15 + 6,
         273.15 + 12,
         273.15 + 30,
