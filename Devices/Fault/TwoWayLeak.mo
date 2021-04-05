@@ -2,11 +2,11 @@ within BuildingControlEmulator.Devices.Fault;
 model TwoWayLeak "Two way valve with equal percentage flow characteristics"
   extends IBPSA.Fluid.Actuators.BaseClasses.PartialTwoWayValveKv(phi=if homotopyInitialization then homotopy(actual=
         IBPSA.Fluid.Actuators.BaseClasses.equalPercentage(
-        noEvent(if time>FauTime then max(y_leak,y_actual) else y_actual),
+        y_real,
         R,
         l,
-        delta0), simplified=l + noEvent(if time>FauTime then max(y_leak,y_actual) else y_actual)*(1 - l)) else IBPSA.Fluid.Actuators.BaseClasses.equalPercentage(
-        noEvent(if time>FauTime then max(y_leak,y_actual) else y_actual),
+        delta0), simplified=l + y_real*(1 - l)) else IBPSA.Fluid.Actuators.BaseClasses.equalPercentage(
+        y_real,
         R,
         l,
         delta0));
@@ -15,6 +15,7 @@ model TwoWayLeak "Two way valve with equal percentage flow characteristics"
     "Range of significant deviation from equal percentage law";
   parameter Real y_leak = 0
     "Stuck postion";
+  Real y_real;
   parameter Modelica.SIunits.Time FauTime = 0 "Time when faults start to occur";
 
 initial equation
@@ -25,6 +26,8 @@ initial equation
                 + "  Rangeability R = " + String(R) + "\n"
                 + "  Leakage flow l = " + String(l) + "\n"
                 + "  Must have l < 1/R = " + String(1/R));
+equation
+  y_real=noEvent(if time>FauTime then max(y_leak,y_actual) else y_actual);
   annotation (
     defaultComponentName="val",
     Documentation(info="<html>
