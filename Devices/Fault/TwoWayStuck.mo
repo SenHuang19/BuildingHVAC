@@ -15,6 +15,8 @@ model TwoWayStuck "Two way valve with equal percentage flow characteristics"
     "Range of significant deviation from equal percentage law";
   parameter Real y_stuck = 0
     "Stuck postion";
+  Real y_real
+    "Actual postion";
   parameter Modelica.SIunits.Time FauTime = 0 "Time when faults start to occur";
 
 initial equation
@@ -25,6 +27,8 @@ initial equation
                 + "  Rangeability R = " + String(R) + "\n"
                 + "  Leakage flow l = " + String(l) + "\n"
                 + "  Must have l < 1/R = " + String(1/R));
+equation
+  y_real = noEvent(if time>FauTime then y_stuck else y_actual);
   annotation (
     defaultComponentName="val",
     Documentation(info="<html>
