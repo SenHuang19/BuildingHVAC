@@ -87,7 +87,7 @@ model FivZonVAV_fault
 
   parameter Modelica.SIunits.TemperatureDifference dt[:] = {0,0,0,0,0} "Constant deviation of temperature measurement";
   parameter Modelica.SIunits.Time FauTime[:] = {0,0,0,0,0} "Time when faults start to occur";
-
+  Modelica.SIunits.Temperature T_real[5] "Constant deviation of temperature measurement";
 
   FivZonNetWor ReheatWatNet(redeclare package Medium = MediumWat,
     PreDroMai1=PreWatDroMai1,
@@ -170,7 +170,7 @@ model FivZonVAV_fault
     annotation (Placement(transformation(extent={{100,30},{120,50}})));
   Modelica.Blocks.Interfaces.RealOutput TZonSen[5]
     "Temperature of the passing fluid"
-    annotation (Placement(transformation(extent={{100,30},{120,50}})));	
+    annotation (Placement(transformation(extent={{100,30},{120,50}})));
   Modelica.Blocks.Sources.RealExpression realExpression[5](y=vol.heatPort.T)
     annotation (Placement(transformation(extent={{50,70},{70,90}})));
   Modelica.Blocks.Sources.RealExpression realExpression1(y=noEvent(if time >
@@ -206,6 +206,7 @@ equation
     connect(vAV[i].port_b, vol[i].ports[1]);
     connect(temZon[i].port_b, AirNetWor.ports_a[i]);
     connect(temZon[i].port_a, vol[i].ports[2]);
+    T_real[i]=vol[i].heatPort.T;
     end for;
 
   connect(ReheatWatNet.port_b, port_b_Wat) annotation (Line(points={{-76,57.2},{-74,57.2},{-74,64},{40,64},{40,100}},
@@ -232,8 +233,8 @@ equation
       points={{-42.5,-35},{-8,-35},{-8,-20},{58,-20},{58,-40},{110,-40}},
       color={0,0,127},
       pattern=LinePattern.Dash));
-  connect(realExpression.y, TZon) annotation (Line(points={{71,80},{94,80},
-          {94,32},{110,32}}, color={0,0,127}));	  
+  connect(realExpression.y, TZon) annotation (Line(points={{71,80},{94,80},{94,40},
+          {110,40}},         color={0,0,127}));
   connect(realExpression1.y, TZonSen[1]) annotation (Line(points={{71,80},{94,80},
           {94,32},{110,32}}, color={0,0,127}));
   connect(realExpression2.y, TZonSen[2]) annotation (Line(points={{71,62},{86,62},
