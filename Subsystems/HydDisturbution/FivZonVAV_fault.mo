@@ -85,8 +85,7 @@ model FivZonVAV_fault
   parameter Modelica.SIunits.Efficiency eps5(max=1) = 0.8
     "Heat exchanger effectiveness of vav 5";
 
-  parameter Modelica.SIunits.TemperatureDifference dt[:] = {0,0,0,0,0} "Constant deviation of temperature measurement";
-  parameter Modelica.SIunits.Time FauTime[:] = {0,0,0,0,0} "Time when faults start to occur";
+  Real dt[5] "Constant deviation of temperature measurement";
   Modelica.SIunits.Temperature T_real[5] "Constant deviation of temperature measurement";
 
   FivZonNetWor ReheatWatNet(redeclare package Medium = MediumWat,
@@ -173,20 +172,15 @@ model FivZonVAV_fault
     annotation (Placement(transformation(extent={{100,30},{120,50}})));
   Modelica.Blocks.Sources.RealExpression realExpression[5](y=vol.heatPort.T)
     annotation (Placement(transformation(extent={{50,70},{70,90}})));
-  Modelica.Blocks.Sources.RealExpression realExpression1(y=noEvent(if time >
-        FauTime[1] then vol[1].heatPort.T + dt[1] else vol[1].heatPort.T))
+  Modelica.Blocks.Sources.RealExpression realExpression1(y=vol[1].heatPort.T + dt[1])
     annotation (Placement(transformation(extent={{50,70},{70,90}})));
-  Modelica.Blocks.Sources.RealExpression realExpression2(y=noEvent(if time >
-        FauTime[2] then vol[2].heatPort.T + dt[2] else vol[2].heatPort.T))
+  Modelica.Blocks.Sources.RealExpression realExpression2(y=vol[2].heatPort.T + dt[2])
     annotation (Placement(transformation(extent={{50,52},{70,72}})));
-  Modelica.Blocks.Sources.RealExpression realExpression3(y=noEvent(if time >
-        FauTime[3] then vol[3].heatPort.T + dt[3] else vol[3].heatPort.T))
+  Modelica.Blocks.Sources.RealExpression realExpression3(y=vol[3].heatPort.T + dt[3])
     annotation (Placement(transformation(extent={{50,32},{70,52}})));
-  Modelica.Blocks.Sources.RealExpression realExpression4(y=noEvent(if time >
-        FauTime[4] then vol[4].heatPort.T + dt[4] else vol[4].heatPort.T))
+  Modelica.Blocks.Sources.RealExpression realExpression4(y=vol[4].heatPort.T + dt[4])
     annotation (Placement(transformation(extent={{50,12},{70,32}})));
-  Modelica.Blocks.Sources.RealExpression realExpression5(y=noEvent(if time >
-        FauTime[5] then vol[5].heatPort.T + dt[5] else vol[5].heatPort.T))
+  Modelica.Blocks.Sources.RealExpression realExpression5(y=vol[5].heatPort.T + dt[5])
     annotation (Placement(transformation(extent={{52,-10},{72,10}})));
 equation
 

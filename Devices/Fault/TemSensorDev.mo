@@ -11,13 +11,11 @@ model TemSensorDev
         origin={0,110},
         extent={{10,-10},{-10,10}},
         rotation=270)));
-
-  parameter Modelica.SIunits.TemperatureDifference dt = 0 "Constant deviation of temperature measurement";
-  parameter Modelica.SIunits.Time FauTime = 0 "Time when faults start to occur";
+  Real dt "Constant deviation of temperature measurement";
 
 equation
 
-  T = noEvent(if time>FauTime then T_real + dt else T_real);
+  T = T_real + dt;
     annotation (Placement(transformation(
         origin={0,110},
         extent={{10,-10},{-10,10}},

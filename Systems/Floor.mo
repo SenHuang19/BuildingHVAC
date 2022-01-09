@@ -144,7 +144,7 @@ model Floor
         273.15 + 12.88),
     Fan_k=0.01)
     annotation (Placement(transformation(extent={{-68,-12},{-40,14}})));
-  replaceable Subsystems.HydDisturbution.FivZonVAV_fault
+  replaceable Subsystems.HydDisturbution.FivZonVAV
                                        fivZonVAV(
     vAV(pI(k=0.1, Ti=60)),
     redeclare package MediumAir = MediumAir,

@@ -88,7 +88,9 @@ model FivZonVAV
   parameter Modelica.SIunits.Pressure PreDroWat5 "Pressure drop in the water side of vav 1";
   parameter Modelica.SIunits.Efficiency eps5(max=1) = 0.8
     "Heat exchanger effectiveness of vav 5";
-
+   Modelica.Blocks.Interfaces.RealOutput TZonSen[5]
+    "Temperature of the passing fluid"
+    annotation (Placement(transformation(extent={{100,30},{120,50}})));
 
 
   FivZonNetWor ReheatWatNet(redeclare package Medium = MediumWat,
@@ -172,6 +174,7 @@ model FivZonVAV
     annotation (Placement(transformation(extent={{100,30},{120,50}})));
   Modelica.Blocks.Sources.RealExpression realExpression[5](y=vol.heatPort.T)
     annotation (Placement(transformation(extent={{44,30},{64,50}})));
+
 equation
 
   connect(fixedHeatFlow.port, vol.heatPort) annotation (Line(points={{-20,-80},{
@@ -221,6 +224,10 @@ equation
       points={{65,40},{110,40}},
       color={0,0,127},
       pattern=LinePattern.Dash));
+   connect(realExpression.y, TZonSen) annotation (Line(points={{65,40},{94,40},{94,40},{110,40}},
+                             color={0,0,127}));
+
+
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Line(points={{-90,40},{80,40}}, color={0,127,255}),
         Line(points={{-90,-60},{80,-60}}, color={0,127,255}),
