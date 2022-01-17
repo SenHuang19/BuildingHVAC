@@ -5,7 +5,7 @@ model TwoWayLeak "Two way valve with equal percentage flow characteristics"
         max(y_leak_act,y_actual),
         R,
         l,
-        delta0), simplified=l + noEvent(if time>FauTime then max(y_leak_act,y_actual) else y_actual)*(1 - l)) else IBPSA.Fluid.Actuators.BaseClasses.equalPercentage(
+        delta0), simplified=l + max(y_leak_act,y_actual)) else IBPSA.Fluid.Actuators.BaseClasses.equalPercentage(
         max(y_leak_act,y_actual),
         R,
         l,

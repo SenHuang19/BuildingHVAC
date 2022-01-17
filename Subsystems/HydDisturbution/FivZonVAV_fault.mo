@@ -200,7 +200,7 @@ equation
     connect(vAV[i].port_b, vol[i].ports[1]);
     connect(temZon[i].port_b, AirNetWor.ports_a[i]);
     connect(temZon[i].port_a, vol[i].ports[2]);
-    T_real[i]=vol[i].heatPort.T;
+    T_real[i]=vol[i].heatPort.T+ dt[i];
     end for;
 
   connect(ReheatWatNet.port_b, port_b_Wat) annotation (Line(points={{-76,57.2},{-74,57.2},{-74,64},{40,64},{40,100}},
