@@ -29,7 +29,12 @@ model ecoCon
   Modelica.Blocks.Interfaces.RealInput Tout
     "Connector of measurement input signal"
     annotation (Placement(transformation(extent={{-140,-60},{-100,-20}})));
+  Modelica.Blocks.Interfaces.BooleanOutput EcoOn "Connector of Real output signal"
+                                                                            annotation (Placement(transformation(extent={{100,-54},{120,-34}})));
+  Modelica.Blocks.Sources.BooleanExpression integerExpression1(y=integerExpression.y and (pI.y < 0.99))
+                                                                              annotation (Placement(transformation(extent={{-14,-58},{6,-38}})));
 equation
+  connect(integerExpression1.y, EcoOn);
   connect(pI.SetPoi, SetPoi)
     annotation (Line(
       points={{8,12},{8,10},{-60,10},{-60,0},{-120,0}},

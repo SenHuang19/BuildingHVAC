@@ -62,8 +62,7 @@ model DuaFanAirHanUnit
     "Fluid connector b (positive design flow direction is from port_a to port_b)"
     annotation (Placement(transformation(extent={{90,-10},{110,10}})));
   Devices.AirSide.Coil.CooCoil
-                       cooCoil(redeclare package MediumAir = MediumAir, redeclare
-      package                                                                             MediumWat = MediumWat,
+                       cooCoil(redeclare package MediumAir = MediumAir, redeclare package MediumWat = MediumWat,
     mAirFloRat=mAirFloRat,
     mWatFloRat=mWatFloRat,
     PreDroAir=PreDroCoiAir,
@@ -73,8 +72,7 @@ model DuaFanAirHanUnit
     UA=UA*1.2*eps)
     annotation (Placement(transformation(extent={{-2,-2},{-20,18}})));
   Devices.AirSide.MixingBox.MixingBox
-                              mixingBox(mTotAirFloRat=mAirFloRat, redeclare
-      package                                                                       Medium = MediumAir,
+                              mixingBox(mTotAirFloRat=mAirFloRat, redeclare package Medium = MediumAir,
     PreDro=PreDroMixingBoxAir,
     mFreAirFloRat=mFreAirFloRat,
     TemHig=TemEcoHig,
@@ -121,11 +119,10 @@ model DuaFanAirHanUnit
   Modelica.Blocks.Interfaces.RealInput HeaTempSetPoi[numTemp]
     "Connector of setpoint input signal"
     annotation (Placement(transformation(extent={{-120,70},{-100,90}})));
-  Modelica.Blocks.Sources.BooleanExpression
-                                         booleanExpression(y=true)
-    annotation (Placement(transformation(extent={{-34,-58},{-14,-38}})));
   Modelica.Blocks.Interfaces.RealInput TOut "outdoor air temperature"
     annotation (Placement(transformation(extent={{-120,-90},{-100,-70}})));
+  Modelica.Blocks.Logical.And and1 annotation (Placement(transformation(extent={{-26,24},{-16,34}})));
+  Modelica.Blocks.Logical.Not not1 annotation (Placement(transformation(extent={{-56,10},{-44,22}})));
 equation
   connect(cooCoil.port_a_Air, mixingBox.port_Sup) annotation (Line(
       points={{-20,0},{-49.8,0},{-49.8,6}},
@@ -153,10 +150,6 @@ equation
       thickness=1));
   connect(mixingBox.On, On) annotation (Line(points={{-68,-12},{-68,-12},{-68,-100},{-110,-100}},
                        color={255,0,255},
-      pattern=LinePattern.Dash));
-  connect(supFan.On, On) annotation (Line(
-      points={{26,6},{10,6},{10,-32},{-80,-32},{-80,-100},{-110,-100}},
-      color={255,0,255},
       pattern=LinePattern.Dash));
   connect(supFan.yRet, retFan.u) annotation (Line(
       points={{49,-8.2},{60,-8.2},{60,-74},{-9,-74}},
@@ -214,12 +207,15 @@ equation
       points={{26,-2},{-46,-2},{-46,40},{-110,40}},
       color={0,0,127},
       pattern=LinePattern.Dash));
-  connect(booleanExpression.y, cooCoil.On) annotation (Line(points={{-13,-48},{
-          8,-48},{8,12},{-0.2,12}}, color={255,0,255}));
   connect(mixingBox.Tout, TOut) annotation (Line(
       points={{-54,-12},{-54,-80},{-110,-80}},
       color={0,0,127},
       pattern=LinePattern.Dash));
+  connect(and1.u1, On) annotation (Line(points={{-27,29},{-84,29},{-84,-18},{-68,-18},{-68,-100},{-110,-100}}, color={255,0,255}));
+  connect(mixingBox.EcoOn, not1.u) annotation (Line(points={{-60,11},{-60,16},{-57.2,16}}, color={255,0,255}));
+  connect(not1.y, and1.u2) annotation (Line(points={{-43.4,16},{-42,16},{-42,24},{-28,24},{-28,25},{-27,25}}, color={255,0,255}));
+  connect(cooCoil.On, and1.y) annotation (Line(points={{-0.2,12},{10,12},{10,29},{-15.5,29}}, color={255,0,255}));
+  connect(supFan.On, On) annotation (Line(points={{26,6},{8,6},{8,-44},{-68,-44},{-68,-100},{-110,-100}}, color={255,0,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Rectangle(
           extent={{-100,100},{100,-100}},

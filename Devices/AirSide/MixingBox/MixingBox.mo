@@ -40,6 +40,7 @@ model MixingBox
   Modelica.Blocks.Interfaces.RealInput Tout
     "Connector of measurement input signal"
     annotation (Placement(transformation(extent={{-140,-80},{-100,-40}})));
+  Modelica.Blocks.Interfaces.BooleanOutput EcoOn "Connector of Real output signal" annotation (Placement(transformation(extent={{100,-10},{120,10}})));
 equation
   connect(mixBox.port_Exh, port_Exh) annotation (Line(
       points={{-19,30},{-19,60},{-60,60},{-60,100}},
@@ -81,6 +82,10 @@ equation
       points={{-72,36},{-80,36},{-80,-60},{-120,-60}},
       color={0,0,127},
       pattern=LinePattern.Dash));
+  connect(ecoCon.EcoOn, EcoOn) annotation (Line(
+      points={{-49,35.6},{78,35.6},{78,0},{110,0}},
+      color={255,0,255},
+      pattern=LinePattern.Dot));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Line(
           points={{-60,90},{-60,-94}},
